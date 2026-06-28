@@ -4,6 +4,46 @@ A fully automated, highly available 3-tier web application infrastructure on AWS
 
 ---
 
+## The Problem This Solves
+
+Imagine you run an online store called NovaMart. Your website is getting popular and you're worried about a few things:
+
+**Problem 1 — What if your server crashes?**
+If your website runs on a single server and that server goes down, your entire store is offline. Every minute of downtime means lost sales and unhappy customers.
+
+**Problem 2 — What if too many people visit at once?**
+If 10 people visit your site normally but suddenly 10,000 people show up during a sale, your single server will get overwhelmed and the site will become slow or crash.
+
+**Problem 3 — What if someone hacks your database?**
+If your database is directly connected to the internet, attackers can try to break in and steal customer data, orders, and passwords.
+
+**Problem 4 — Setting up servers manually takes forever**
+Clicking through dashboards to set up servers one by one takes days, is error-prone, and impossible to repeat exactly. If you need to set up a second environment (like staging or production), you have to do everything again from scratch.
+
+---
+
+## How This Project Solves It
+
+**Solution 1 — No single point of failure**
+Instead of one server, we run multiple servers across two separate AWS data centers (Availability Zones). If one entire data center goes down, the other one keeps the website running. Users never notice anything went wrong.
+
+**Solution 2 — Automatic scaling**
+We set up an Auto Scaling Group that watches CPU usage. If traffic spikes and servers get busy (above 70% CPU), AWS automatically adds more servers within minutes. When traffic drops (below 20% CPU), it removes the extra servers so you don't pay for what you don't need.
+
+**Solution 3 — Three separate layers with strict security**
+- The **Load Balancer** is the only thing that faces the internet — it receives all incoming traffic
+- The **App Servers** only accept traffic from the Load Balancer — nothing else can reach them
+- The **Database** only accepts traffic from the App Servers — it is completely hidden from the internet
+
+Even if someone broke through the Load Balancer, they still cannot reach the database directly. This is called Defence in Depth.
+
+**Solution 4 — Everything is code**
+The entire infrastructure — every server, every network rule, every alarm — is written as Terraform code. To deploy the whole system you run one command. To tear it all down you run one command. To set up an identical staging environment, you change one variable. No clicking, no forgetting steps, no human error.
+
+**The result:** A website that stays online even when servers fail, handles traffic spikes automatically, keeps customer data protected, and can be rebuilt from scratch in under 15 minutes.
+
+---
+
 ## Architecture Overview
 
 ```
