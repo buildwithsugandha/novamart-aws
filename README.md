@@ -1,5 +1,7 @@
 # NovaMart AWS — Production-Grade 3-Tier Architecture
 
+![Architecture Cover](docs/screenshots/Article%20Cover_page-0001.jpg)
+
 A fully automated, highly available 3-tier web application infrastructure on AWS, built with Terraform. Deployed and verified live in ap-south-1 (Mumbai).
 
 ---
